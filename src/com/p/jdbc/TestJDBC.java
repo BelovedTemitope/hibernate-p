@@ -7,7 +7,7 @@ public class TestJDBC {
 
 	public static void main(String[] args) {
 		
-		String jdbcURL = "jdbc:mysql://localhost:3306/hb_student_tracker?useSSL=false";
+		String jdbcURL = "jdbc:mysql://localhost:3306/hb-01-one-to-one-uni?useSSL=false";
 		String user = "hbstudent";
 		String password ="hbstudent";
 		

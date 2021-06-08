@@ -4,11 +4,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import com.shark.hibernate.d.entity.Course;
 import com.shark.hibernate.d.entity.Instructor;
 import com.shark.hibernate.d.entity.InstructorDetail;
 import com.shark.hibernate.d.entity.Student;
 
-public class CreateDemo {
+public class GetInstructorCoursesDemo {
 
 	public static void main(String[] args) {
 
@@ -17,6 +18,7 @@ public class CreateDemo {
 				.configure("hibernate.cfg.xml")
 				.addAnnotatedClass(Instructor.class)
 				.addAnnotatedClass(InstructorDetail.class)
+				.addAnnotatedClass(Course.class)
 				.buildSessionFactory();
 		
 		//create session 
@@ -24,37 +26,27 @@ public class CreateDemo {
 		
 		try {
 			
-			// create the objects 
-			Instructor tempInstructor = new Instructor("Madhu", "Patel", "madhu@luv2code.com");
-			
-			InstructorDetail tempInstructorDetail = new InstructorDetail(
-					"http://www.youtube.com", 
-					"Guitar");
-			
-//			Instructor tempInstructor = new Instructor("Chad", "Darby", "beloved@luv2code.com");
-//			
-//			InstructorDetail tempInstructorDetail = new InstructorDetail(
-//					"http://www.luv2code.com/youtube", 
-//					"Luv 2 code!");
-			
-			// associate the objects 
-			tempInstructor.setInstructorDetail(tempInstructorDetail);
-			
 			// start a transaction
 			session.beginTransaction();
 			
-			// save the instructor
-			//
-			// Note: this will ALSO save details object
-			// because of CascadseType.ALL
-			//
-			System.out.println("Saving instructor: "+tempInstructor);
-			session.save(tempInstructor);
+			// get the instructor from the db
+			int theId = 1;
+			Instructor tempInstructor = session.get(Instructor.class, theId);
+			
+			System.out.println("Instructor " + tempInstructor);
+			
+			// get courses for the instructor 
+			System.out.println("Courses: " + tempInstructor.getCourses());
 			
 			// commit transaction
 			session.getTransaction().commit();
+			
 			System.out.println("Done!");
 		}finally {
+			
+			// add clean up code
+			session.close();
+			
 			factory.close();
 		}
 	}

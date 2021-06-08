@@ -1,10 +1,12 @@
 package com.shark.hibernate.d.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -34,6 +36,22 @@ public class InstructorDetail {
 	@Column(name="hobby")
 	private String hobby;
 	
+	// add new field for instructor (also add getter/setter methods 
+	
+	// add one to one relationship
+	
+	@OneToOne(mappedBy = "instructorDetail",
+			cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	private Instructor instructor;
+	
+	public Instructor getInstructor() {
+		return instructor;
+	}
+
+	public void setInstructor(Instructor instructor) {
+		this.instructor = instructor;
+	}
+
 	public InstructorDetail() {
 		
 	}
